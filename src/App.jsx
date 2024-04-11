@@ -10,18 +10,28 @@ function App() {
     {title:'red',red:255,green:0,blue:0},
     {title:'green',red:0,green:255,blue:0},
     {title:'blue',red:0,green:0,blue:255},
-    {title:'random',red:randomColors,green:0,blue:255},
     
   ]
+  const randomData = 
+    [{title:'color',color:'rgb(255,255,255)'}]
   
-  const color = 
-    {red:0,green:0,blue:0}
+ 
+    
   
   const [colors, setColors] = useState(data);
-  const [randomColors, setRandomColors] = useState(color);
-  const setRandomColor = ()=>{
-    setRandomColors({red:randomRGB(),blue:randomRGB(),green:randomRGB()})
+  const [randomColor, setRandomColor] = useState('');
+  const [randomColors, setRandomColors] = useState(randomData)
+  const addRandomColor = ()=>{
+    setRandomColor(`rgb(${randomRGB()},${randomRGB()},${randomRGB()})`);
+    const newcolor = randomColors.concat({title:'color',color:randomColor})
+    setRandomColors(newcolor)
   }
+  const removeRandomColor = (i)=>{
+    setRandomColor(`rgb(${randomRGB()},${randomRGB()},${randomRGB()})`);
+    const newcolor = randomColors.concat({title:'color',color:randomColor})
+    setRandomColors(newcolor)
+  }
+
 
   return (
     <div className="App">
@@ -35,7 +45,12 @@ function App() {
           </ul>
         </div>
         <div>
-            <button onClick={setRandomColors()}></button>
+            <button onClick={()=>addRandomColor()}>add random color</button>
+            <ul>
+            {randomColors.map((color, i) => (
+              <li key={"color-" + i} style={{color:color.color}}>{color.title}</li>
+            ))}
+          </ul>
         </div>
       </header>
     </div>
