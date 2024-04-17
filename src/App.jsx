@@ -1,12 +1,12 @@
 import { SketchPicker } from "react-color";
 import "./App.css";
 import { useState } from "react";
+import {ListGroupComponent} from './components'
 
 function App() {
   const randomRGB = () => {
     return Math.ceil(Math.random() * 255);
   };
-  console.log(randomRGB());
   const data = [
     { title: "red", red: 255, green: 0, blue: 0 },
     { title: "green", red: 0, green: 255, blue: 0 },
@@ -16,6 +16,7 @@ function App() {
   const [colors, setColors] = useState(data);
   const [title, setTitle] = useState("");
   const [colorpickerChecked, setColorpickerChecked] = useState(false);
+  const [openListGroup, setOpenListGroup] = useState(false);
 
   const addRandomColor = () => {
     setColors([
@@ -24,15 +25,27 @@ function App() {
     ]);
   };
   const handleColorPicker = (color) => {
-    setColors([...colors, {title:title, red:color.r,green:color.g,blue:color.b}])
-  }
+    setColors([
+      ...colors,
+      { title: title, red: color.r, green: color.g, blue: color.b },
+    ]);
+  };
   const colorpicker = () => {
     if (colorpickerChecked)
       return (
         <div>
-          < SketchPicker color={{r:255,g:0,b:0}} onChangeComplete={(e)=>handleColorPicker(e.rgb)}/>
+          <SketchPicker
+            color={{ r: 255, g: 0, b: 0 }}
+            onChangeComplete={(e) => handleColorPicker(e.rgb)}
+          />
         </div>
       );
+  };
+  const listGroup = () => {
+    if (openListGroup) {
+      
+      return (<ListGroupComponent />);
+    }
   };
 
   return (
@@ -70,6 +83,15 @@ function App() {
           />
 
           {colorpicker()}
+          <div>
+            <button
+              type="button"
+              onClick={() => setOpenListGroup(!openListGroup)}
+            >
+              ListGroup Aufgabe öffnen/schliessen
+            </button>
+            {listGroup()}
+          </div>
         </div>
       </header>
     </div>
