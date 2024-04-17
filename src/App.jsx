@@ -1,37 +1,39 @@
+import { SketchPicker } from "react-color";
 import "./App.css";
 import { useState } from "react";
 
 function App() {
-  
-  const randomRGB = () => { 
-    return Math.ceil(Math.random()*255);}
+  const randomRGB = () => {
+    return Math.ceil(Math.random() * 255);
+  };
   console.log(randomRGB());
   const data = [
-    {title:'red',red:255,green:0,blue:0},
-    {title:'green',red:0,green:255,blue:0},
-    {title:'blue',red:0,green:0,blue:255},
-    
-  ]
-  const randomData = 
-    [{title:'color',color:'rgb(255,255,255)'}]
-  
- 
-    
-  
-  const [colors, setColors] = useState(data);
-  const [randomColor, setRandomColor] = useState('');
-  const [randomColors, setRandomColors] = useState(randomData)
-  const addRandomColor = ()=>{
-    setRandomColor(`rgb(${randomRGB()},${randomRGB()},${randomRGB()})`);
-    const newcolor = randomColors.concat({title:'color',color:randomColor})
-    setRandomColors(newcolor)
-  }
-  const removeRandomColor = (i)=>{
-    setRandomColor(`rgb(${randomRGB()},${randomRGB()},${randomRGB()})`);
-    const newcolor = randomColors.concat({title:'color',color:randomColor})
-    setRandomColors(newcolor)
-  }
+    { title: "red", red: 255, green: 0, blue: 0 },
+    { title: "green", red: 0, green: 255, blue: 0 },
+    { title: "blue", red: 0, green: 0, blue: 255 },
+  ];
 
+  const [colors, setColors] = useState(data);
+  const [title, setTitle] = useState("");
+  const [colorpickerChecked, setColorpickerChecked] = useState(false);
+
+  const addRandomColor = () => {
+    setColors([
+      ...colors,
+      { title: title, red: randomRGB(), green: randomRGB(), blue: randomRGB() },
+    ]);
+  };
+  const handleColorPicker = (color) => {
+    setColors([...colors, {title:title, red:color.r,green:color.g,blue:color.b}])
+  }
+  const colorpicker = () => {
+    if (colorpickerChecked)
+      return (
+        <div>
+          < SketchPicker color={{r:255,g:0,b:0}} onChangeComplete={(e)=>handleColorPicker(e.rgb)}/>
+        </div>
+      );
+  };
 
   return (
     <div className="App">
@@ -40,17 +42,34 @@ function App() {
           <h1>list Aufgabe 1</h1>
           <ul>
             {colors.map((color, i) => (
-              <li key={"color-" + i} style={{color:`rgb(${color.red},${color.green},${color.blue})`}}>{color.title}</li>
+              <li
+                key={"color-" + i}
+                style={{
+                  color: `rgb(${color.red},${color.green},${color.blue})`,
+                }}
+              >
+                {color.title}
+              </li>
             ))}
           </ul>
         </div>
         <div>
-            <button onClick={()=>addRandomColor()}>add random color</button>
-            <ul>
-            {randomColors.map((color, i) => (
-              <li key={"color-" + i} style={{color:color.color}}>{color.title}</li>
-            ))}
-          </ul>
+          <input
+            type="text"
+            name="title"
+            id="title"
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <button onClick={() => addRandomColor()}>add random color</button>
+          <label htmlFor="colorpicker">colorpicker</label>
+          <input
+            type="checkbox"
+            name="colorpicker"
+            id="colorpicker"
+            onClick={() => setColorpickerChecked(!colorpickerChecked)}
+          />
+
+          {colorpicker()}
         </div>
       </header>
     </div>
