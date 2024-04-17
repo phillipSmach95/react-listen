@@ -1,7 +1,7 @@
 import { SketchPicker } from "react-color";
 import "./App.css";
 import { useState } from "react";
-import {ListGroupComponent} from './components'
+import ListGroupComponent from './components/ListGroupComponent'
 
 function App() {
   const randomRGB = () => {

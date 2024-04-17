@@ -1,11 +1,18 @@
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import './ListGroupComponent.css'
-import { ListGroupItem, ListGroup } from 'react-bootstrap';
+import { useState } from 'react';
 
 function ListGroupComponent(){
+    const data = ['One Piece','Demon Slayer', 'HunterXHunter', 'Dragonball', 'made in abyss']
+    const [animeList, setAnimeList] = useState(data)
+    const [isActive, setIsActive] = useState(false)
+    
     return(
     <div>
         <h1>anime</h1>
-        <ListGroupItem/>
+        <ListGroup>
+            {animeList.map((a, i)=>(<ListGroup.Item variant="primary" active={isActive} onClick={()=>{setIsActive(!isActive)}} key={i}>{a}</ListGroup.Item>))}
+        </ListGroup>
     </div>
 )
 }
