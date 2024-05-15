@@ -18,6 +18,7 @@ function ListGroupComponent() {
   const moveItemToSecondList = () => {
     setSecondAnimeList([...secondAnimeList, animeList[index]]);
     setAnimeList(animeList.filter((a) => a !== animeList[index]));
+    console.log(animeList);
   };
   const moveItemToAnimeList = () => {
     setAnimeList([...animeList, secondAnimeList[index]]);
@@ -26,12 +27,13 @@ function ListGroupComponent() {
     );
   };
   const moveAllToAnimeList = () =>{
-    setAnimeList(...animeList, secondAnimeList)
+    setAnimeList([...animeList, animeList.push(...secondAnimeList)])
     setSecondAnimeList([])
+    console.log( animeList
+    );
   }
   const moveAllToSecondAnimeList = () =>{
-    setSecondAnimeList(...secondAnimeList, animeList)
-    setAnimeList([])
+    setSecondAnimeList(...secondAnimeList, ...animeList)
   }
 
   return (
